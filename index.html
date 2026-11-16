@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Interactive Aggregate Demand and Supply Model</title>
+<style>
+:root{font-family:system-ui,-apple-system,Segoe UI,Arial,sans-serif;color:#192638;background:#f7f9fc}*{box-sizing:border-box}body{margin:0 auto;padding:1.3rem;max-width:1100px;line-height:1.55}h1{font-size:1.75rem;margin:.1rem 0}h2{font-size:1.15rem}p{margin:.45rem 0 1rem}.intro{max-width:850px}.layout{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(270px,1fr);gap:1rem}.panel{background:#fff;border:1px solid #cad3e1;border-radius:12px;padding:1rem;min-width:0}.controls label{display:block;font-weight:700;margin-top:1rem}.controls input[type=range]{width:100%;accent-color:#184d91;height:2.3rem}.value{font-variant-numeric:tabular-nums;font-weight:600}button{border:1px solid #24518a;border-radius:7px;background:#fff;color:#173965;padding:.55rem .75rem;margin:.25rem .35rem .2rem 0;font-size:1rem;cursor:pointer}button:focus-visible,input:focus-visible{outline:3px solid #cc6b00;outline-offset:3px}button:hover{background:#e9f2ff}svg{display:block;width:100%;height:auto}#interpretation{border-left:4px solid #235c9c;padding-left:.8rem}.note{font-size:.93rem;color:#384963}table{border-collapse:collapse;width:100%;margin:.7rem 0}th,td{padding:.48rem;text-align:left;border-bottom:1px solid #d7e0ea}th{background:#edf3fb}footer{font-size:.88rem;margin-top:1.2rem;color:#40516a}.legend{display:flex;gap:1rem;flex-wrap:wrap;font-size:.92rem}.dash{display:inline-block;width:20px;border-top:3px dashed #787082;vertical-align:middle;margin-right:5px}.swatch{display:inline-block;width:20px;border-top:4px solid;vertical-align:middle;margin-right:5px}.ad{color:#1767b1}.sras{color:#b05218}.lras{color:#665483}@media(max-width:760px){.layout{grid-template-columns:1fr}body{padding:.75rem}}@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body>
+<main>
+<h1>Explore the AD–AS Model</h1>
+<p class="intro">Move the aggregate demand (AD) and short-run aggregate supply (SRAS) controls. The long-run aggregate supply (LRAS) line remains at potential real GDP of <strong>100</strong> (illustrative units). Compare the current intersection of AD and SRAS with LRAS. <strong>Free to use offline; no account required.</strong></p>
+<div class="layout">
+<section class="panel" aria-labelledby="chart-title">
+<h2 id="chart-title">Aggregate demand and supply graph</h2>
+<div class="legend" aria-hidden="true"><span><i class="swatch ad"></i>AD</span><span><i class="swatch sras"></i>SRAS</span><span><i class="dash lras"></i>LRAS</span></div>
+<svg id="plot" viewBox="0 0 650 460" role="img" aria-labelledby="svg-title svg-desc">
+<title id="svg-title">Interactive aggregate demand and supply diagram</title>
+<desc id="svg-desc">The aggregate demand curve slopes down, short-run aggregate supply slopes up, and long-run aggregate supply is vertical at real GDP 100. The written results beneath the graph give exact values and economic interpretation.</desc>
+<rect x="68" y="28" width="548" height="370" fill="#fbfcff" stroke="#c4cedb"/>
+<g id="grid"></g><g id="curves"></g><g id="guides"></g>
+<text x="342" y="449" text-anchor="middle" font-size="17" fill="#192638">Real GDP (illustrative units)</text>
+<text transform="translate(21,216) rotate(-90)" text-anchor="middle" font-size="17" fill="#192638">Price level (index)</text>
+</svg>
+<div id="interpretation" role="status" aria-live="polite" aria-atomic="true"></div>
+<table aria-label="Numerical equilibrium results"><tbody>
+<tr><th scope="row">Current equilibrium real GDP</th><td id="eq-output">100</td></tr>
+<tr><th scope="row">Equilibrium price level</th><td id="eq-price">100</td></tr>
+<tr><th scope="row">Potential real GDP (LRAS)</th><td>100</td></tr>
+<tr><th scope="row">Output gap (actual minus potential)</th><td id="eq-gap">0</td></tr>
+</tbody></table>
+</section>
+<section class="panel controls" aria-labelledby="controls-title">
+<h2 id="controls-title">Change the economy</h2>
+<label for="ad">AD shift: <output class="value" id="ad-value" for="ad">0</output></label>
+<input id="ad" type="range" min="-24" max="24" step="2" value="0" aria-describedby="ad-help"><p class="note" id="ad-help">Move right to increase aggregate demand; left to decrease it. Use arrow keys for precise changes.</p>
+<label for="sras">SRAS shift: <output class="value" id="sras-value" for="sras">0</output></label>
+<input id="sras" type="range" min="-24" max="24" step="2" value="0" aria-describedby="sras-help"><p class="note" id="sras-help">Move right to increase short-run aggregate supply; left to decrease it. A rightward supply shift lowers the curve.</p>
+<h2>Try a scenario</h2>
+<button type="button" id="recession">Recessionary gap</button>
+<button type="button" id="inflation">Inflationary gap</button>
+<button type="button" id="supply">Adverse supply shock</button>
+<button type="button" id="reset">Return to long-run equilibrium</button>
+<h2>Think before you move</h2>
+<p>Predict what happens to <strong>real GDP</strong>, the <strong>price level</strong>, and the <strong>output gap</strong>. Then move one control and check the results.</p>
+<p class="note">This model illustrates short-run intersections and their position relative to potential GDP. It does <strong>not</strong> automatically model long-run adjustment, changes to potential GDP, or fiscal/monetary policy transmission.</p>
+</section>
+</div>
+<footer><strong>Instructor note:</strong> Teaching illustration, not calibrated to U.S. data. Equations: AD price level = 160 − 0.6 × output + AD shift; SRAS price level = 40 + 0.6 × output − SRAS shift; LRAS at output = 100. A positive SRAS shift means more supply (curve moves down/right). The model can be shared through an LMS as one HTML file. Use the results table and textual explanation as alternatives to reading the graph visually.</footer>
+</main>
+<script>
+(function(){'use strict';
+const ad=document.getElementById('ad'),sras=document.getElementById('sras');
+const svgNS='http://www.w3.org/2000/svg',grid=document.getElementById('grid'),curves=document.getElementById('curves'),guides=document.getElementById('guides');
+const X=x=>68+x/160*548,Y=y=>398-(y-40)/120*370;
+function el(parent,tag,attrs,text){const e=document.createElementNS(svgNS,tag);Object.keys(attrs||{}).forEach(k=>e.setAttribute(k,attrs[k]));if(text!==undefined)e.textContent=text;parent.appendChild(e);return e;}
+for(let x=0;x<=160;x+=20){el(grid,'line',{x1:X(x),x2:X(x),y1:28,y2:398,stroke:'#e2e8f0'});el(grid,'text',{x:X(x),y:420,'text-anchor':'middle','font-size':13,fill:'#3e4c61'},String(x));}
+for(let y=40;y<=160;y+=20){el(grid,'line',{x1:68,x2:616,y1:Y(y),y2:Y(y),stroke:'#e2e8f0'});el(grid,'text',{x:58,y:Y(y)+5,'text-anchor':'end','font-size':13,fill:'#3e4c61'},String(y));}
+function path(fn){let d='';for(let x=0;x<=160;x+=2){let y=fn(x);d+=(x===0?'M':'L')+X(x).toFixed(2)+' '+Y(y).toFixed(2)+' ';}return d;}
+function redraw(){const a=+ad.value,s=+sras.value,x=(120+a+s)/1.2,y=160-.6*x+a,gap=x-100;curves.replaceChildren();guides.replaceChildren();
+el(curves,'line',{x1:X(100),x2:X(100),y1:Y(160),y2:Y(40),stroke:'#665483','stroke-width':3,'stroke-dasharray':'10 6'});
+el(curves,'path',{d:path(x=>160-.6*x+a),stroke:'#1767b1','stroke-width':4,fill:'none'});
+el(curves,'path',{d:path(x=>40+.6*x-s),stroke:'#b05218','stroke-width':4,fill:'none'});
+el(curves,'text',{x:X(15),y:Y(160-.6*15+a)-10,fill:'#1767b1','font-size':17,'font-weight':700},'AD');
+el(curves,'text',{x:X(145),y:Y(40+.6*145-s)-10,fill:'#b05218','font-size':17,'font-weight':700},'SRAS');
+el(curves,'text',{x:X(100)+9,y:47,fill:'#665483','font-size':17,'font-weight':700},'LRAS');
+el(guides,'line',{x1:68,x2:X(x),y1:Y(y),y2:Y(y),stroke:'#5a6472','stroke-width':1.7,'stroke-dasharray':'5 5'});
+el(guides,'line',{x1:X(x),x2:X(x),y1:Y(y),y2:398,stroke:'#5a6472','stroke-width':1.7,'stroke-dasharray':'5 5'});
+el(guides,'circle',{cx:X(x),cy:Y(y),r:6.3,fill:'#111827',stroke:'#fff','stroke-width':2});
+document.getElementById('ad-value').textContent=(a>0?'+':'')+a;
+document.getElementById('sras-value').textContent=(s>0?'+':'')+s;
+document.getElementById('eq-output').textContent=x.toFixed(1);document.getElementById('eq-price').textContent=y.toFixed(1);document.getElementById('eq-gap').textContent=(gap>0?'+':'')+gap.toFixed(1);
+let title,detail;if(Math.abs(gap)<.0001){title='Long-run equilibrium.';detail='The AD and SRAS intersection is on LRAS: actual GDP equals potential GDP (100).';}else if(gap<0){title='Short-run equilibrium with a recessionary gap.';detail='Actual GDP is '+Math.abs(gap).toFixed(1)+' units below potential GDP. AD and SRAS intersect to the left of LRAS.';}else{title='Short-run equilibrium with an inflationary gap.';detail='Actual GDP is '+gap.toFixed(1)+' units above potential GDP. AD and SRAS intersect to the right of LRAS.';}
+document.getElementById('interpretation').textContent=title+' '+detail;document.getElementById('svg-desc').textContent='AD and SRAS intersect at real GDP '+x.toFixed(1)+' and price level '+y.toFixed(1)+'. Potential GDP is 100. '+title;
+}
+ad.addEventListener('input',redraw);sras.addEventListener('input',redraw);
+function set(a,s){ad.value=a;sras.value=s;redraw();}
+document.getElementById('recession').addEventListener('click',()=>set(-18,0));document.getElementById('inflation').addEventListener('click',()=>set(18,0));document.getElementById('supply').addEventListener('click',()=>set(0,-18));document.getElementById('reset').addEventListener('click',()=>set(0,0));redraw();
+})();
+</script>
+</body>
+</html>
